@@ -1,0 +1,8 @@
+name = "internship_cloudflare-fullstack-2020"
+type = "javascript"
+account_id = "<account_id>"
+workers_dev = true
+
+[env.production]
+zone_id = "<zone_id>"
+route = "https://*.khaledemara.dev/*"
