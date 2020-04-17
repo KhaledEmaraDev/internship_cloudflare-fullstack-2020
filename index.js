@@ -32,6 +32,7 @@ async function handleRequest(event) {
     } else {
       const variant = num_requests.variant0 <= num_requests.variant1 ? 0 : 1
       num_requests[`variant${variant}`]++
+      // const variant = Math.random() < 0.5 ? 0 : 1
       res = await fetch(variants[variant])
       res = new Response(res.body, res)
       res.headers.append('Set-Cookie', `variant=${variant}; Max-Age=1209600; Secure; HttpOnly; SameSite=Lax`)
@@ -100,9 +101,9 @@ class AttributeRewriter {
 const rewriter = new HTMLRewriter()
   .on('title', new InnerContentRewriter("Cloudflare's 2020 Intern Role Take-Home Challenge"))
   .on('h1#title', new InnerContentRewriter("Cloudflare's 2020 Intern Role Take-Home Challenge"))
-  .on('p#description', new InnerContentRewriter("This is a take-home challenge for Cloudflare's 2020 intern role done by Khaled Emara."))
-  .on('a#url', new InnerContentRewriter("Go to the applicant's GitHub."))
-  .on('a#url', new AttributeRewriter("href", "https://github.com/KhaledEmaraDev/"))
+  .on('p#description', new InnerContentRewriter("This is a take-home challenge for Cloudflare's 2020 intern role done by Khaled Emara. A random experiment wouldn't evenly divide the requests, because of persistence. For instance, the same agent will request the same variant, again and again and again, stressing requests to this variant. Keeping track of the number of requests is the only way to make them even. The ideal solution for this would be to use Workers KV, but since it's an unlimited plan only option, I haven't been able to use it. The next best option is global variables. But it's not ideal, because wokers will be terminated if not used for a long time and different edge locations will decommission a new instance. For the purposes of load balancing this is actually idea. Because if the volume of requests is low then balancing shouldn't be an issue and different edge locations means a new server to offload of the main server."))
+  .on('a#url', new InnerContentRewriter("Go to the repo's GitHub page."))
+  .on('a#url', new AttributeRewriter("href", "https://github.com/KhaledEmaraDev/internship_cloudflare-fullstack-2020"))
 
 /**
  * Determine the response data type and parse it.
